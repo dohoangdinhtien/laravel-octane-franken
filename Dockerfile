@@ -88,7 +88,7 @@ RUN sed -i'' -e 's/^APP_ENV=.*/APP_ENV=production/' -e 's/^APP_DEBUG=.*/APP_DEBU
 # Install the dependencies
 RUN composer install --ignore-platform-reqs --no-dev -a
 
-ENV FRANKENPHP_CONFIG="worker ./public/index.php"
+# ENV FRANKENPHP_CONFIG="worker ./public/index.php"
 
 # Change current user to www
 # USER www
