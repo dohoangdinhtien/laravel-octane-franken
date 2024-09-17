@@ -89,6 +89,14 @@ COPY . /app
 # Copy .env file
 RUN cp .env.example .env
 
+# Change APP_ENV and APP_DEBUG to be production ready
+RUN sed -i'' -e 's/^APP_ENV=.*/APP_ENV=production/' -e 's/^APP_DEBUG=.*/APP_DEBUG=false/' .env
+
+# Make other changes to your .env file if needed
+
+# Install the dependencies
+RUN composer install --ignore-platform-reqs --no-dev -a
+
 # RUN php artisan migrate:reset
 # RUN php artisan migrate
 # RUN php artisan db:seed
@@ -102,14 +110,6 @@ RUN php artisan key:generate
 
 RUN php artisan route:cache
 RUN php artisan config:cache
-
-# Change APP_ENV and APP_DEBUG to be production ready
-RUN sed -i'' -e 's/^APP_ENV=.*/APP_ENV=production/' -e 's/^APP_DEBUG=.*/APP_DEBUG=false/' .env
-
-# Make other changes to your .env file if needed
-
-# Install the dependencies
-RUN composer install --ignore-platform-reqs --no-dev -a
 
 ENV FRANKENPHP_CONFIG="worker ./app/public/index.php"
 
