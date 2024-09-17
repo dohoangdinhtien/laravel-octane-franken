@@ -89,4 +89,4 @@ RUN php artisan config:cache
 
 ENV FRANKENPHP_CONFIG="worker ./app/public/index.php"
 
-ENTRYPOINT ["php", "artisan", "octane:frankenphp --workers=4"]
+ENTRYPOINT ["php", "artisan", "octane:frankenphp", "--workers=4"]
