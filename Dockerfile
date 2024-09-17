@@ -66,6 +66,22 @@ COPY . /app
 # Copy .env file
 RUN cp .env.example .env
 
+RUN php artisan key:generate
+
+# RUN php artisan migrate:reset
+# RUN php artisan migrate
+# RUN php artisan db:seed
+
+RUN php artisan route:clear
+RUN php artisan config:clear
+RUN php artisan cache:clear
+RUN php artisan storage:link
+
+# RUN php artisan route:cache
+RUN php artisan config:cache
+
+RUN php artisan storage:link
+
 # Change APP_ENV and APP_DEBUG to be production ready
 RUN sed -i'' -e 's/^APP_ENV=.*/APP_ENV=production/' -e 's/^APP_DEBUG=.*/APP_DEBUG=false/' .env
 
