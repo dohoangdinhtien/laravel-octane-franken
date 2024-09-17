@@ -57,6 +57,23 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Enable PHP production settings
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
+# COPY docker/php/conf.d/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+############################ Setting Opcache #####################################
+# RUN printf "\n\
+# [opcache]\n\
+# opcache.enable=1\n\
+# opcache.enable_cli=1\n\
+# ;opcache.memory_consumption=512\n\
+# ;opcache.jit_buffer_size=400M\n\
+# opcache.interned_strings_buffer=64\n\
+# opcache.max_accelerated_files=32531\n\
+# opcache.validate_timestamps=0\n\
+# opcache.save_comments=1\n\
+# opcache.fast_shutdown=0\n\
+# opcache.file_cache=/tmp/php-opcache\n\
+# ;opcache.file_cache_only=1\n\
+# " >> /etc/php82/conf.d/app-opcache.ini
+
 # Set working directory
 WORKDIR /app
 
@@ -76,15 +93,15 @@ RUN cp .env.example .env
 # RUN php artisan migrate
 # RUN php artisan db:seed
 
-# RUN php artisan route:clear
-# RUN php artisan config:clear
-# RUN php artisan cache:clear
-# RUN php artisan storage:link
+RUN php artisan route:clear
+RUN php artisan config:clear
+RUN php artisan cache:clear
+RUN php artisan storage:link
 
-# RUN php artisan key:generate
+RUN php artisan key:generate
 
-# RUN php artisan route:cache
-# RUN php artisan config:cache
+RUN php artisan route:cache
+RUN php artisan config:cache
 
 # Change APP_ENV and APP_DEBUG to be production ready
 RUN sed -i'' -e 's/^APP_ENV=.*/APP_ENV=production/' -e 's/^APP_DEBUG=.*/APP_DEBUG=false/' .env
