@@ -57,34 +57,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Enable PHP production settings
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
-# COPY docker/php/conf.d/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
-############################ Setting Opcache #####################################
-# RUN printf "\n\
-# [opcache]\n\
-# opcache.enable=1\n\
-# opcache.enable_cli=1\n\
-# ;opcache.memory_consumption=512\n\
-# ;opcache.jit_buffer_size=400M\n\
-# opcache.interned_strings_buffer=64\n\
-# opcache.max_accelerated_files=32531\n\
-# opcache.validate_timestamps=0\n\
-# opcache.save_comments=1\n\
-# opcache.fast_shutdown=0\n\
-# opcache.file_cache=/tmp/php-opcache\n\
-# ;opcache.file_cache_only=1\n\
-# " >> /etc/php82/conf.d/app-opcache.ini
-
 # Set working directory
 WORKDIR /app
 
-# Add user for laravel application
-# RUN groupadd -g 1000 www
-# RUN useradd -u 1000 -ms /bin/bash -g www www
-
 COPY . /app
-
-# Copy existing application directory permissions
-# COPY --chown=www:www . /app
 
 # Copy .env file
 RUN cp .env.example .env
@@ -113,7 +89,4 @@ RUN php artisan config:cache
 
 ENV FRANKENPHP_CONFIG="worker ./app/public/index.php"
 
-# Change current user to www
-# USER www
-
-ENTRYPOINT ["php", "artisan", "octane:frankenphp"]
+ENTRYPOINT ["php", "artisan", "octane:frankenphp --workers=4"]
