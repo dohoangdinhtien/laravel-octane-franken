@@ -1,3 +1,9 @@
+# https://career.weroad.travel/monkeys/laravel-frankenphp-docker/
+# https://chriswhite.is/coding/frankenphp-and-laravel-octane-with-docker/
+# https://frankenphp.dev/docs/docker/
+# https://www.abdulwaheed.me/blog/frankenphp-via-docker
+# https://laradock.io/documentation/#use-redis-cluster
+# https://speakerdeck.com/dunglas/running-laravel-apps-with-frankenphp?slide=16
 FROM dunglas/frankenphp
 
 RUN apt-get update
