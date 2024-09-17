@@ -51,13 +51,13 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 WORKDIR /app
 
 # Add user for laravel application
-RUN groupadd -g 1000 www
-RUN useradd -u 1000 -ms /bin/bash -g www www
+# RUN groupadd -g 1000 www
+# RUN useradd -u 1000 -ms /bin/bash -g www www
 
 COPY . /app
 
 # Copy existing application directory permissions
-COPY --chown=www:www ./src /app
+# COPY --chown=www:www . /app
 
 # Copy .env file
 RUN cp .env.example .env
@@ -73,6 +73,6 @@ RUN composer install --ignore-platform-reqs --no-dev -a
 ENV FRANKENPHP_CONFIG="worker ./public/index.php"
 
 # Change current user to www
-USER www
+# USER www
 
 ENTRYPOINT ["php", "artisan", "octane:frankenphp"]
